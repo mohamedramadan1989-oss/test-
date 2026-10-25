@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة ضغطة - لوحة تحكم التاجر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #f3f7fd;
+            --sidebar-bg: #10294f;
+            --primary: #0878f9;
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --warning: #f59e0b;
+            --warning-bg: #fef3c7;
+            --danger: #ef4444;
+            --danger-bg: #fee2e2;
+            --info: #3b82f6;
+            --info-bg: #dbeafe;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 264px;
+            min-width: 264px;
+            background: linear-gradient(180deg,#10294f,#102e59);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 14px;
+            color: #fff;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 10px 18px;
+            margin: 0 4px 28px;
+            justify-content: center;
+        }
+
+        .brand img {
+            max-width: 150px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            padding: 13px 16px;
+            color: #e2eaf7;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 5px 14px #0878f933;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-support-card {
+            background: #17345e66;
+            border: 1px solid #29476e;
+            padding: 18px 14px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 0 4px 4px;
+        }
+
+        .sidebar-support-card p {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .support-btn {
+            background: #0b3670;
+            border: 1px solid #0878f9;
+            color: #fff;
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .support-btn:hover {
+            background: #0878f9;
+        }
+
+        /* Main Area */
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+            width: calc(100vw - 264px);
+        }
+
+        header {
+            background-color: var(--card-bg);
+            padding: 12px 28px;
+            min-height: 74px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: #f1f6ff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: var(--danger);
+            color: #fff;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .user-profile-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .store-logo-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .user-profile-box .text h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .user-profile-box .text .store-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .user-profile-box .text span.role {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .store-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            border: 1px solid #e0e9f7;
+            min-width: 210px;
+            justify-content: center;
+        }
+
+        .dashboard-body {
+            padding: 18px 24px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+            width: 100%;
+        }
+
+        .tab-panel {
+            display: none;
+            flex-direction: column;
+            gap: 17px;
+            width: 100%;
+        }
+
+        .tab-panel.active {
+            display: flex;
+        }
+
+        .store-cover-banner {
+            width: 100%;
+            height: 120px;
+            border-radius: 12px;
+            background-image: linear-gradient(rgba(16, 41, 79, 0.4), rgba(16, 41, 79, 0.6)), url('https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 5px;
+        }
+
+        .store-cover-content {
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .store-cover-content h2 {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .store-cover-content p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 14px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 135px;
+        }
+
+        .hero-text-side h1 {
+            font-size: 27px;
+            font-weight: 800;
+            color: #102b53;
+            margin-bottom: 6px;
+        }
+
+        .hero-text-side p {
+            font-size: 15px;
+            color: #6483b5;
+        }
+
+        .hero-graphics-side {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            min-width: 42%;
+            justify-content: flex-start;
+        }
+
+        /* Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            padding: 14px 15px;
+            border-radius: 9px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px #17345e08;
+        }
+
+        .metric-card .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-direction: row-reverse;
+        }
+
+        .metric-card .top-row span {
+            font-size: 13px;
+            font-weight: 700;
+            color: #183b70;
+        }
+
+        .metric-card .top-row .icon-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .metric-card h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .trend {
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            justify-content: flex-start;
+        }
+        .trend.up { color: var(--success); }
+        .trend.down { color: var(--danger); }
+
+        /* Middle Section */
+        .middle-section {
+            display: grid;
+            grid-template-columns: minmax(0,1.75fr) minmax(220px,1fr) minmax(200px,.8fr);
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .card-panel {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid #e8eef8;
+            padding: 16px;
+            box-shadow: 0 4px 16px #17345e08;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-header-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #183b70;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 220px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* Tables & Search */
+        .table-box {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid #e8eef8;
+            overflow: hidden;
+            box-shadow: 0 4px 16px #17345e08;
+        }
+
+        .toolbar {
+            padding: 13px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box-input {
+            padding: 8px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 12px;
+            outline: none;
+            width: 240px;
+            background: #f8fafc;
+        }
+        .search-box-input:focus {
+            border-color: var(--primary);
+            background: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #f4f7fc;
+            color: #25446f;
+            font-weight: 700;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .status-pill {
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .b-success { background: var(--success-bg); color: var(--success); }
+        .b-warning { background: var(--warning-bg); color: var(--warning); }
+        .b-danger { background: var(--danger-bg); color: var(--danger); }
+        .b-info { background: var(--info-bg); color: var(--info); }
+
+        .btn-table {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .item-row img {
+            width: 34px;
+            height: 34px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        /* Modal إضافة منتج جديد */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-card {
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 16px;
+            width: 550px;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: right;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .modal-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .form-group {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .form-group input, .form-group select {
+            padding: 9px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 12px;
+            outline: none;
+            background: #f8fafc;
+        }
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 5px;
+        }
+        .checkbox-grid label {
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        @media (max-width:1100px) {
+          aside { width:220px; min-width:220px; }
+          main { width:calc(100vw - 220px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside>
+        <div>
+            <div class="brand">
+                <!-- إدراج الشعار المطلوب Daghta_ar_white.png في مكان اسم المنصة -->
+                <img src="Daghta_ar_white.png" alt="منصة ضغطة" onerror="this.src='https://via.placeholder.com/150x40?text=Daghta'">
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="showTab('home', this)">
+                    <i class="fa-solid fa-house"></i> الصفحة الرئيسية
+                </li>
+                <li class="nav-item" onclick="showTab('orders', this)">
+                    <i class="fa-solid fa-bag-shopping"></i> الطلبات
+                </li>
+                <li class="nav-item" onclick="showTab('products', this)">
+                    <i class="fa-solid fa-boxes-stacked"></i> المنتجات
+                </li>
+                <li class="nav-item" onclick="showTab('customers', this)">
+                    <i class="fa-solid fa-users"></i> العملاء
+                </li>
+                <li class="nav-item" onclick="showTab('reports', this)">
+                    <i class="fa-solid fa-chart-pie"></i> التقارير
+                </li>
+                <li class="nav-item" onclick="showTab('settings', this)">
+                    <i class="fa-solid fa-gear"></i> الإعدادات
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-support-card">
+            <p>محتاج مساعدة؟<br><small style="color:#94a3b8;">فريق الدعم دائماً معك</small></p>
+            <button class="support-btn" onclick="openSupportModal()">تواصل معنا</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <header>
+            <div class="header-right">
+                <div class="user-profile-box">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100" alt="Store Logo" class="store-logo-badge">
+                    <div class="text">
+                        <h4>أحمد محمد</h4>
+                        <span class="store-name">متجر النخبة الحديث</span>
+                        <span class="role">صاحب المتجر</span>
+                    </div>
+                </div>
+                <button class="notification-btn">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+            </div>
+            <div class="store-dropdown">
+                <span>متجرك الإلكتروني</span>
+                <i class="fa-solid fa-chevron-down" style="font-size: 11px; color: var(--text-muted);"></i>
+                <i class="fa-solid fa-store" style="color:var(--primary); margin-right: 6px;"></i>
+            </div>
+        </header>
+
+        <div class="dashboard-body">
+
+            <!-- 1. HOME TAB -->
+            <div id="home" class="tab-panel active">
+                <div class="store-cover-banner">
+                    <div class="store-cover-content">
+                        <h2>مرحباً بك في لوحة تحكم متجرك</h2>
+                        <p>تابع عمليات البيع والشحن والعملاء بكل سهولة واحترافية.</p>
+                    </div>
+                </div>
+
+                <div class="hero-banner">
+                    <div class="hero-text-side">
+                        <h1>كل طلباتك في مكان واحد</h1>
+                        <p>تابع طلباتك، نظم شغلك، وزد مبيعاتك بسهولة.</p>
+                    </div>
+                    <div class="hero-graphics-side">
+                        <div style="text-align: center; color: var(--primary); font-weight: 700; font-size: 13px;">
+                            <span>من هنا تبدأ رحلة مبيعاتك</span><br>
+                            <i class="fa-solid fa-arrow-turn-down"></i>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: flex-end;">
+                            <i class="fa-solid fa-mobile-screen" style="font-size: 26px; color: #64748b;"></i>
+                            <i class="fa-solid fa-laptop" style="font-size: 45px; color: var(--primary);"></i>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <i class="fa-solid fa-store" style="font-size: 32px; color: var(--primary);"></i>
+                            <div style="width: 35px; height: 28px; background: #d97706; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px;"><i class="fa-solid fa-box"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="top-row"><span>إجمالي المبيعات</span><div class="icon-badge" style="background:#e0f2fe; color:#0284c7;"><i class="fa-solid fa-arrow-trend-up"></i></div></div>
+                        <h3>82,450 <span style="font-size:14px; font-weight:600; color:var(--text-muted);">ر.س</span></h3>
+                        <div class="trend up"><i class="fa-solid fa-arrow-up"></i> 12% من الشهر الماضي</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="top-row"><span>إجمالي الطلبات</span><div class="icon-badge" style="background:#ede9fe; color:#7c3aed;"><i class="fa-solid fa-box"></i></div></div>
+                        <h3>342</h3>
+                        <div class="trend up"><i class="fa-solid fa-arrow-up"></i> 18% من الشهر الماضي</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="top-row"><span>طلبات قيد المعالجة</span><div class="icon-badge" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-clock"></i></div></div>
+                        <h3>28</h3>
+                        <div class="trend down"><i class="fa-solid fa-arrow-down"></i> 5% من الشهر الماضي</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="top-row"><span>طلبات تم شحنها</span><div class="icon-badge" style="background:#d1fae5; color:#059669;"><i class="fa-solid fa-truck-fast"></i></div></div>
+                        <h3>298</h3>
+                        <div class="trend up"><i class="fa-solid fa-arrow-up"></i> 20% من الشهر الماضي</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ORDERS TAB -->
+            <div id="orders" class="tab-panel">
+                <div class="table-box">
+                    <div class="toolbar">
+                        <h3>إدارة كافة الطلبات الواردة</h3>
+                        <input type="text" id="searchOrders" class="search-box-input" placeholder="بحث برقم الطلب أو اسم العميل..." oninput="filterTable('ordersTable', 'searchOrders')">
+                    </div>
+                    <table id="ordersTable">
+                        <thead>
+                            <tr><th>رقم الطلب</th><th>العميل</th><th>المنتج</th><th>المبلغ</th><th>حالة الطلب</th><th>تاريخ الطلب</th><th>الإجراءات</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>#1024</td><td>أحمد علي</td><td><div class="item-row"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=80">حقيبة ظهر</div></td><td>1,250 ج.م</td><td><span class="status-pill b-success">تم التسليم</span></td><td>27 أكتوبر 2025</td><td><button class="btn-table" onclick="viewOrder('1024')">تعديل</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 3. PRODUCTS TAB -->
+            <div id="products" class="tab-panel">
+                <div class="table-box">
+                    <div class="toolbar">
+                        <h3>قائمة منتجات المتجر</h3>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <input type="text" id="searchProducts" class="search-box-input" placeholder="بحث باسم المنتج..." oninput="filterTable('productsTable', 'searchProducts')">
+                            <button class="btn-table" onclick="openProductModal()"><i class="fa-solid fa-plus"></i> إضافة منتج جديد</button>
+                        </div>
+                    </div>
+                    <table id="productsTable">
+                        <thead>
+                            <tr><th>صورة المنتج</th><th>اسم المنتج</th><th>القسم</th><th>السعر الأساسي</th><th>نسبة الخصم</th><th>السعر بعد الخصم</th><th>المقاسات والمواصفات</th><th>الإجراءات</th></tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                          <tr>
+                              <td><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=80" style="width:34px;height:34px;border-radius:6px;object-fit:cover;"></td>
+                              <td>حقيبة ظهر عصرية</td>
+                              <td>اكسسوارات</td>
+                              <td>1,500 ج.م</td>
+                              <td><span style="color:var(--danger); font-weight:700;">16%</span></td>
+                              <td><strong>1,250 ج.م</strong></td>
+                              <td><span style="font-size:11px; color:var(--text-muted);">مقاس موحد</span></td>
+                              <td><button class="btn-table">تعديل</button></td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. CUSTOMERS TAB -->
+            <div id="customers" class="tab-panel">
+                <div class="table-box">
+                    <div class="toolbar">
+                        <h3>قائمة عملاء المتجر</h3>
+                        <input type="text" id="searchCustomers" class="search-box-input" placeholder="بحث باسم العميل أو الهاتف..." oninput="filterTable('customersTable', 'searchCustomers')">
+                    </div>
+                    <table id="customersTable">
+                        <thead>
+                            <tr><th>اسم العميل</th><th>رقم الهاتف</th><th>البريد الإلكتروني</th><th>إجمالي الطلبات</th><th>إجمالي المشتريات</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>أحمد علي</td><td>01012345678</td><td>ahmed@example.com</td><td>5 طلبات</td><td>6,250 ج.م</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 5. REPORTS TAB (مع كافة التقارير المطلوبة بالكامل) -->
+            <div id="reports" class="tab-panel">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="top-row"><span>صافي الأرباح</span><div class="icon-badge" style="background:#d1fae5; color:#059669;"><i class="fa-solid fa-wallet"></i></div></div>
+                        <h3>54,200 ج.م</h3>
+                        <div class="trend up">محدث شهرياً</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="top-row"><span>إجمالي المبيعات</span><div class="icon-badge" style="background:#e0f2fe; color:#0284c7;"><i class="fa-solid fa-chart-line"></i></div></div>
+                        <h3>82,450 ج.م</h3>
+                        <div class="trend up">نمو مستمر</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="top-row"><span>متوسط قيمة الطلب</span><div class="icon-badge" style="background:#ede9fe; color:#7c3aed;"><i class="fa-solid fa-receipt"></i></div></div>
+                        <h3>1,420 ج.م</h3>
+                        <div class="trend up">أداء ممتاز</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="top-row"><span>معدل التحويل</span><div class="icon-badge" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-percent"></i></div></div>
+                        <h3>4.8%</h3>
+                        <div class="trend up">جيد جداً</div>
+                    </div>
+                </div>
+
+                <div class="card-panel">
+                    <div class="card-header-title">تقرير أداء المبيعات الشامل والتحليلات</div>
+                    <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6;">توضح التقارير المالية وسلوك العملاء نمواً بنسبة 18% مقارنة بالشهر السابق. يمكنك متابعة حركة الأرباح اليومية والأسبوعية وتصدير التقارير بصيغة Excel أو PDF بكل سهولة.</p>
+                </div>
+            </div>
+
+            <!-- 6. SETTINGS TAB (مع كافة إعدادات المتجر الكاملة) -->
+            <div id="settings" class="tab-panel">
+                <div class="card-panel" style="gap: 15px;">
+                    <div class="card-header-title">إعدادات المتجر العامة</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+                        <label><strong>اسم المتجر:</strong> <input type="text" value="متجر النخبة الحديث" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%; margin-top: 4px;"></label>
+                        <label><strong>البريد الإلكتروني للإدارة:</strong> <input type="email" value="store@daghta.com" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%; margin-top: 4px;"></label>
+                        <label><strong>رقم الهاتف:</strong> <input type="text" value="01000000000" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%; margin-top: 4px;"></label>
+                        <label><strong>عملة المتجر:</strong> 
+                            <select style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%; margin-top: 4px;">
+                                <option value="EGP" selected>جنيه مصري (ج.م)</option>
+                                <option value="SAR">ريال سعودي (ر.س)</option>
+                            </select>
+                        </label>
+                        <button class="btn-table" style="width: fit-content; margin-top: 10px;" onclick="alert('تم حفظ الإعدادات بنجاح!')">حفظ التغييرات</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal إضافة منتج جديد -->
+    <div id="productModal" class="modal-overlay" onclick="if(event.target===this)closeProductModal()">
+        <div class="modal-card">
+            <h3>إضافة منتج جديد للمتجر</h3>
+            <form id="addProductForm" onsubmit="saveNewProduct(event)">
+                <div class="form-group">
+                    <label>اسم المنتج:</label>
+                    <input type="text" id="prodName" required placeholder="مثال: بنطلون جينز / قميص كلاسيك...">
+                </div>
+
+                <div class="form-group">
+                    <label>اختر القسم (التصنيف):</label>
+                    <select id="prodCategory" onchange="toggleCategoryOptions()" required>
+                        <option value="">-- اختر القسم --</option>
+                        <option value="بناطيل">بناطيل</option>
+                        <option value="قمصان">قمصان</option>
+                        <option value="طرح">طرح</option>
+                        <option value="كاوتشات">كاوتشات</option>
+                        <option value="جزم">جزم</option>
+                        <option value="اكسسوارات">أخرى / اكسسوارات</option>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>السعر الأساسي (ج.م):</label>
+                        <input type="number" id="prodPrice" required placeholder="1000">
+                    </div>
+                    <div class="form-group">
+                        <label>نسبة الخصم (%):</label>
+                        <input type="number" id="prodDiscount" value="0" placeholder="مثال: 15">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>تحميل صورة المنتج من الجهاز:</label>
+                    <input type="file" id="prodImageFile" accept="image/*" required style="padding: 7px; background: #fff;">
+                </div>
+
+                <div class="form-group" id="optionsContainer" style="display:none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label id="optionsLabel">المقاسات المتاحة:</label>
+                        <label style="color: var(--primary); cursor: pointer; font-size: 11px;"><input type="checkbox" id="selectAllOpt" onclick="toggleSelectAll(this)"> تحديد كل المقاسات</label>
+                    </div>
+                    <div class="checkbox-grid" id="checkboxGrid"></div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end;">
+                    <button type="button" onclick="closeProductModal()" style="background: #e2e8f0; color: var(--text-main); border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700;">إلغاء</button>
+                    <button type="submit" class="btn-table">حفظ وإضافة المنتج</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal الدعم الفني -->
+    <div class="modal-overlay" id="supportModal" onclick="if(event.target===this)closeSupportModal()">
+      <div class="modal-card" style="width: 450px;">
+        <button onclick="closeSupportModal()" style="float:left;border:0;background:none;font-size:20px;cursor:pointer">×</button>
+        <h3>تواصل مع فريق الدعم</h3>
+        <p style="font-size:13px;color:#64748b">اكتب رسالتك وسيتواصل معك فريقنا.</p>
+        <textarea id="supportMessage" placeholder="اكتب رسالتك هنا..." style="width:100%; height:100px; padding:10px; border:1px solid #cbd5e1; border-radius:8px; margin:10px 0; outline:none; font-family:'Cairo';"></textarea>
+        <button class="btn-table" style="width:100%; padding:10px;" onclick="sendSupport()">إرسال الرسالة</button>
+      </div>
+    </div>
+
+    <script>
+      function showTab(tabId, element) {
+        var panels = document.querySelectorAll('.tab-panel');
+        panels.forEach(function(panel) { panel.classList.remove('active'); });
+        var target = document.getElementById(tabId);
+        if (target) { target.classList.add('active'); }
+        var navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(function(item) { item.classList.remove('active'); });
+        if (element) { element.classList.add('active'); }
+      }
+
+      function filterTable(tableId, inputId) {
+        var input = document.getElementById(inputId);
+        var filter = input.value.toLowerCase().trim();
+        var table = document.getElementById(tableId);
+        var tr = table.getElementsByTagName('tr');
+        for (var i = 1; i < tr.length; i++) {
+          var td = tr[i].getElementsByTagName('td');
+          var match = false;
+          for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+              if (td[j].textContent.toLowerCase().indexOf(filter) > -1) { match = true; break; }
+            }
+          }
+          tr[i].style.display = match ? "" : "none";
+        }
+      }
+
+      function openProductModal() { document.getElementById('productModal').style.display = 'flex'; }
+      function closeProductModal() { 
+          document.getElementById('productModal').style.display = 'none'; 
+          document.getElementById('addProductForm').reset();
+          document.getElementById('optionsContainer').style.display = 'none';
+      }
+
+      function toggleCategoryOptions() {
+          var category = document.getElementById('prodCategory').value;
+          var container = document.getElementById('optionsContainer');
+          var grid = document.getElementById('checkboxGrid');
+          var label = document.getElementById('optionsLabel');
+          grid.innerHTML = '';
+          document.getElementById('selectAllOpt').checked = false;
+
+          if (!category) {
+              container.style.display = 'none';
+              return;
+          }
+
+          container.style.display = 'flex';
+          var options = [];
+
+          if (category === 'بناطيل') {
+              label.innerText = 'المقاسات المتوفرة (بناطيل):';
+              options = ['مقاس 28', 'مقاس 30', 'مقاس 32', 'مقاس 34', 'مقاس 36', 'مقاس 38', 'مقاس 40'];
+          } else if (category === 'قمصان') {
+              label.innerText = 'المقاسات المتوفرة (قمصان):';
+              options = ['سمول (S)', 'ميديم (M)', 'لارج (L)', 'إكس لارج (XL)', 'دبل إكس (2XL)'];
+          } else if (category === 'طرح') {
+              label.innerText = 'الألوان المتوفرة (طرح):';
+              options = ['أسود', 'كشمير', 'بيج', 'كحلي', 'رمادي', 'أبيض', 'ألوان متعددة'];
+          } else if (category === 'كاوتشات' || category === 'جزم') {
+              label.innerText = 'المقاسات المتوفرة (أحذية):';
+              options = ['مقاس 38', 'مقاس 39', 'مقاس 40', 'مقاس 41', 'مقاس 42', 'مقاس 43', 'مقاس 44', 'مقاس 45'];
+          } else {
+              label.innerText = 'الخيارات المتاحة:';
+              options = ['متوفر قياس قياسي'];
+          }
+
+          options.forEach(function(opt) {
+              var div = document.createElement('label');
+              div.innerHTML = '<input type="checkbox" name="productOption" value="' + opt + '"> ' + opt;
+              grid.appendChild(div);
+          });
+      }
+
+      function toggleSelectAll(masterCheckbox) {
+          var checkboxes = document.querySelectorAll('input[name="productOption"]');
+          checkboxes.forEach(function(cb) { cb.checked = masterCheckbox.checked; });
+      }
+
+      function saveNewProduct(event) {
+          event.preventDefault();
+          var name = document.getElementById('prodName').value;
+          var category = document.getElementById('prodCategory').value;
+          var price = parseFloat(document.getElementById('prodPrice').value);
+          var discount = parseFloat(document.getElementById('prodDiscount').value) || 0;
+          var fileInput = document.getElementById('prodImageFile');
+
+          var selectedOptions = [];
+          var checkboxes = document.querySelectorAll('input[name="productOption"]:checked');
+          checkboxes.forEach(function(cb) { selectedOptions.push(cb.value); });
+          var optionsText = selectedOptions.length > 0 ? selectedOptions.join(', ') : 'مقاس موحد';
+
+          var finalPrice = price - (price * (discount / 100));
+
+          if (fileInput.files && fileInput.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                  addProductToTable(name, category, price, discount, finalPrice, optionsText, e.target.result);
+              };
+              reader.readAsDataURL(fileInput.files[0]);
+          } else {
+              addProductToTable(name, category, price, discount, finalPrice, optionsText, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=80');
+          }
+      }
+
+      function addProductToTable(name, category, price, discount, finalPrice, optionsText, imageUrl) {
+          var tbody = document.getElementById('productsTableBody');
+          var newRow = document.createElement('tr');
+          newRow.innerHTML = `
+              <td><img src="${imageUrl}" style="width:34px;height:34px;border-radius:6px;object-fit:cover;"></td>
+              <td>${name}</td>
+              <td>${category}</td>
+              <td>${price.toLocaleString()} ج.م</td>
+              <td><span style="color:var(--danger); font-weight:700;">${discount}%</span></td>
+              <td><strong>${finalPrice.toLocaleString()} ج.م</strong></td>
+              <td><span style="font-size:11px; color:var(--text-muted);">${optionsText}</span></td>
+              <td><button class="btn-table">تعديل</button></td>
+          `;
+          tbody.insertBefore(newRow, tbody.firstChild);
+
+          alert('تم إضافة المنتج بنجاح إلى جدول المنتجات!');
+          closeProductModal();
+      }
+
+      function openSupportModal(){ document.getElementById('supportModal').style.display='flex'; }
+      function closeSupportModal(){ document.getElementById('supportModal').style.display='none'; }
+      function sendSupport(){
+        const msg = document.getElementById('supportMessage').value.trim();
+        if(!msg){alert('من فضلك اكتب رسالتك أولاً.');return;}
+        alert('تم إرسال رسالتك بنجاح.');
+        document.getElementById('supportMessage').value=''; closeSupportModal();
+      }
+      function viewOrder(id){ alert('تفاصيل الطلب رقم #' + id); }
+    </script>
+</body>
+</html>

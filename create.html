@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daghta - Create Your Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { font-family: 'Cairo', sans-serif; box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; }
+        body { background-color: #070a12; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; direction: ltr; text-align: left; }
+        
+        .store-card { background: #0f172a; color: #f8fafc; padding: 40px 35px; border-radius: 24px; width: 550px; max-width: 100%; box-shadow: 0 25px 50px rgba(0,0,0,0.7); border: 1px solid #1e293b; position: relative; }
+        .store-logo { width: 140px; height: auto; object-fit: contain; margin: 0 auto 20px; display: block; }
+        .store-title { font-size: 24px; font-weight: 900; color: #ffffff; margin-bottom: 8px; text-align: center; }
+        .store-subtitle { font-size: 13px; color: #94a3b8; font-weight: 600; margin-bottom: 30px; text-align: center; }
+
+        .input-box { margin-bottom: 20px; }
+        .input-box label { display: block; font-size: 13px; font-weight: 800; color: #cbd5e1; margin-bottom: 6px; }
+        .input-box input, .input-box select { width: 100%; padding: 13px 16px; border: 1.5px solid #334155; border-radius: 12px; font-size: 14px; outline: none; background: #1e293b; color: #fff; }
+        .input-box input:focus, .input-box select:focus { border-color: #38bdf8; background: #0f172a; box-shadow: 0 0 0 3px rgba(56,189,248,0.15); }
+
+        .btn-launch { width: 100%; padding: 15px; background: linear-gradient(135deg, #38bdf8, #0284c7); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(56,189,248,0.3); margin-top: 15px; }
+        .btn-launch:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(56,189,248,0.5); }
+
+        .back-home { position: absolute; top: 20px; left: 20px; color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .back-home:hover { color: #38bdf8; }
+    </style>
+</head>
+<body>
+
+    <div class="store-card">
+        <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Home</a>
+        
+        <img src="Daghta_logo_en.png" class="store-logo" alt="Daghta">
+        <div class="store-title">Launch Your Online Store</div>
+        <div class="store-subtitle">Set up your brand details and start selling in seconds.</div>
+
+        <div class="input-box">
+            <label>Store Name / Brand</label>
+            <input type="text" id="storeName" placeholder="e.g. Hala Accessories">
+        </div>
+
+        <div class="input-box">
+            <label>Preferred Currency</label>
+            <select id="storeCurrency">
+                <option value="EGP">EGP (Egyptian Pound)</option>
+                <option value="SAR">SAR (Saudi Riyal)</option>
+                <option value="AED">AED (UAE Dirham)</option>
+                <option value="USD">USD (US Dollar)</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>WhatsApp Number (for receiving orders)</label>
+            <input type="text" id="storePhone" placeholder="e.g. +201012345678">
+        </div>
+
+        <button class="btn-launch" onclick="createStore()">Launch Store Now 🚀</button>
+    </div>
+
+    <script>
+        function createStore() {
+            const name = document.getElementById('storeName').value.trim();
+            const currency = document.getElementById('storeCurrency').value;
+            const phone = document.getElementById('storePhone').value.trim();
+
+            if (!name || !phone) {
+                alert('Please fill in your store name and WhatsApp number.');
+                return;
+            }
+
+            localStorage.setItem('daghta_merchant_brand', name);
+            localStorage.setItem('daghta_currency', currency);
+            localStorage.setItem('daghta_phone', phone);
+            
+            alert('Store created successfully! Redirecting to your dashboard...');
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

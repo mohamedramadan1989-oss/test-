@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة ضغطة - لوحة تحكم الإدارة (الأدمن)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #f4f6f9;
+            --sidebar-bg: #0f172a;
+            --primary: #2563eb;
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --warning: #f59e0b;
+            --warning-bg: #fef3c7;
+            --danger: #ef4444;
+            --danger-bg: #fee2e2;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 260px;
+            min-width: 260px;
+            background-color: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 16px;
+            color: #fff;
+            height: 100vh;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .brand-logo-icon {
+            font-size: 24px;
+            color: #60a5fa;
+        }
+
+        .brand-text .ar {
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        .brand-text .en {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            color: #94a3b8;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+            width: calc(100vw - 260px);
+        }
+
+        header {
+            background-color: var(--card-bg);
+            padding: 16px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-profile img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .admin-profile .text h4 {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .admin-profile .text span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .dashboard-body {
+            padding: 24px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+        }
+
+        /* Metrics Grid للأدمن */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .metric-card .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .metric-card .top-row span {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .metric-card .top-row .icon-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .metric-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        /* جدول رسائل التجار */
+        .table-box {
+            background: var(--card-bg);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .toolbar {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .b-warning { background: var(--warning-bg); color: var(--warning); }
+        .b-success { background: var(--success-bg); color: var(--success); }
+
+        .btn-action {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        /* Modal عرض والرد على الرسالة */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            width: 500px;
+            text-align: right;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .modal-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .modal-card .msg-details {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 12px 0;
+            font-size: 13px;
+            color: var(--text-main);
+        }
+        .modal-card textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            margin-top: 5px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar الأدمن -->
+    <aside>
+        <div>
+            <div class="brand">
+                <i class="fa-solid fa-shield-halved brand-logo-icon"></i>
+                <div class="brand-text">
+                    <span class="ar">إدارة منصة ضغطة</span>
+                    <span class="en">Admin Control Panel</span>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <i class="fa-solid fa-envelope-open-text"></i> رسائل ودعم التجار
+                </li>
+                <li class="nav-item" onclick="alert('قسم إرسال الإشعارات العامة للتجار')">
+                    <i class="fa-solid fa-bullhorn"></i> الإشعارات العامة
+                </li>
+                <li class="nav-item" onclick="alert('قسم إدارة اشتراكات المتاجر')">
+                    <i class="fa-solid fa-store"></i> إدارة المتاجر
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <header>
+            <div class="admin-profile">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100" alt="Admin">
+                <div class="text">
+                    <h4>مرحباً، مدير النظام (الأدمن)</h4>
+                    <span>مسؤول الدعم الفني والمنصة</span>
+                </div>
+            </div>
+            <button class="btn-action" onclick="alert('تم تسجيل الخروج بنجاح')">تسجيل الخروج</button>
+        </header>
+
+        <div class="dashboard-body">
+
+            <!-- إحصائيات سريعة للرسائل -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="top-row"><span>إجمالي الرسائل الواردة</span><div class="icon-badge" style="background:#e0f2fe; color:#0284c7;"><i class="fa-solid fa-inbox"></i></div></div>
+                    <h3>14 رسالة</h3>
+                </div>
+                <div class="metric-card">
+                    <div class="top-row"><span>الرسائل قيد الانتظار</span><div class="icon-badge" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-clock"></i></div></div>
+                    <h3>3 رسائل</h3>
+                </div>
+                <div class="metric-card">
+                    <div class="top-row"><span>الرسائل التي تم الرد عليها</span><div class="icon-badge" style="background:#d1fae5; color:#059669;"><i class="fa-solid fa-circle-check"></i></div></div>
+                    <h3>11 رسالة</h3>
+                </div>
+            </div>
+
+            <!-- جدول رسايل التجار الواردة -->
+            <div class="table-box">
+                <div class="toolbar">
+                    <h3>رسايل واستفسارات التجار الواردة من لوحات التحكم</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم الرسالة</th>
+                            <th>اسم التاجر / المتجر</th>
+                            <th>نص الرسالة</th>
+                            <th>تاريخ الوارد</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#MSG-501</strong></td>
+                            <td>أحمد محمد (متجر النخبة الحديث)</td>
+                            <td>عندي مشكلة في ربط بوابة السداد الإلكتروني، محتاج مساعدة ضروري.</td>
+                            <td>27 أكتوبر 2025 - 02:15 م</td>
+                            <td><span class="badge b-warning">قيد الانتظار</span></td>
+                            <td>
+                                <button class="btn-action" onclick="openReplyModal('أحمد محمد (متجر النخبة الحديث)', 'عندي مشكلة في ربط بوابة السداد الإلكتروني، محتاج مساعدة ضروري.')">عرض والرد</button>
+                                <button class="btn-action btn-danger" onclick="this.closest('tr').remove(); alert('تم حذف الرسالة بنجاح');">حذف</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>#MSG-500</strong></td>
+                            <td>سارة محمود (متجر الأزياء العصرية)</td>
+                            <td>كيف أقدر أضيف منتجات بأقسام متعددة في نفس الوقت؟</td>
+                            <td>26 أكتوبر 2025 - 11:30 ص</td>
+                            <td><span class="badge b-success">تم الرد</span></td>
+                            <td>
+                                <button class="btn-action" onclick="openReplyModal('سارة محمود (متجر الأزياء العصرية)', 'كيف أقدر أضيف منتجات بأقسام متعددة في نفس الوقت؟')">عرض والرد</button>
+                                <button class="btn-action btn-danger" onclick="this.closest('tr').remove(); alert('تم حذف الرسالة بنجاح');">حذف</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal الرد على التاجر -->
+    <div id="replyModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>رد الإدارة على رسالة التاجر</h3>
+            <div id="modalSender" style="font-size: 13px; font-weight: 700; color: var(--primary);"></div>
+            <div class="msg-details" id="modalMsgText"></div>
+            <label style="font-size: 13px; font-weight: 700;">اكتب الرد للتاجر:</label>
+            <textarea id="adminReplyText" placeholder="اكتب ردك هنا وسيصل فوراً إلى لوحة تحكم التاجر..."></textarea>
+            <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: flex-end;">
+                <button onclick="closeReplyModal()" style="background: #e2e8f0; color: var(--text-main); border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700;">إلغاء</button>
+                <button onclick="sendAdminReply()" class="btn-action">إرسال الرد للتاجر</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openReplyModal(sender, message) {
+            document.getElementById('modalSender').innerText = 'المرسل: ' + sender;
+            document.getElementById('modalMsgText').innerText = message;
+            document.getElementById('replyModal').style.display = 'flex';
+        }
+
+        function closeReplyModal() {
+            document.getElementById('replyModal').style.display = 'none';
+            document.getElementById('adminReplyText').value = '';
+        }
+
+        function sendAdminReply() {
+            var reply = document.getElementById('adminReplyText').value.trim();
+            if(reply === "") {
+                alert("برجاء كتابة رد أولاً!");
+                return;
+            }
+            alert("تم إرسال الرد بنجاح إلى التاجر وتحديث حالة الرسالة!");
+            closeReplyModal();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle" data-ar="Daghta - المنصة الأولى لإنشاء المتاجر الفورية" data-en="Daghta - #1 Instant Store Creator Platform">Daghta - المنصة الأولى لإنشاء المتاجر الفورية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- مكتبة تسجيل الدخول الرسمية من Google -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <nav class="navbar">
+        <a href="#" class="nav-brand-box">
+            <img src="Daghta_ar_white.png" id="headerLogo" class="exact-logo-img" alt="Daghta Logo" data-ar-logo="Daghta_ar_white.png" data-en-logo="Daghta_logo_en.png">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#how" data-ar="كيف نعمل؟" data-en="How it Works?">كيف نعمل؟</a></li>
+            <li><a href="#stores" data-ar="شركاء النجاح" data-en="Success Partners">شركاء النجاح</a></li>
+            <li><a href="#faq" data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</a></li>
+            <li><a href="contact.html" data-ar="اتصل بنا" data-en="Contact Us">اتصل بنا</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="lang-btn" onclick="toggleLanguage()"><i class="fa-solid fa-globe"></i> <span id="langText">English</span></button>
+            <a href="javascript:void(0)" class="btn-login" onclick="openAuthModal('login')" data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</a>
+            <a href="javascript:void(0)" class="btn-cta" onclick="openAuthModal('register')" data-ar="إنشاء حساب جديد" data-en="Create Account">إنشاء حساب جديد</a>
+        </div>
+    </nav>
+
+    <!-- نافذة تسجيل الدخول / إنشاء حساب (Modal) -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="modal-close" onclick="closeAuthModal()">✕</span>
+            <img src="Daghta_ar_white.png" class="modal-logo-img" id="modalLogoImg" alt="Daghta" data-ar-logo="Daghta_ar_white.png" data-en-logo="Daghta_logo_en.png">
+            <div class="modal-brand-title" id="modalMainTitle" data-ar="ابحث عنها. أعلن عنها. قدها." data-en="Create it. Manage it. Done.">ابحث عنها. أعلن عنها. قدها.</div>
+            <div class="modal-brand-subtitle" id="modalSubTitle" data-ar="سجّل الدخول لاستكشاف المنصة الرائدة لإنشاء المتاجر في الوطن العربي." data-en="Sign in to explore the leading store platform in the Arab world.">سجّل الدخول لاستكشاف المنصة الرائدة لإنشاء المتاجر في الوطن العربي.</div>
+
+            <div class="input-box">
+                <label data-ar="البريد الإلكتروني أو رقم الهاتف" data-en="Email or Phone Number">البريد الإلكتروني أو رقم الهاتف</label>
+                <input type="text" id="userInput" data-ar-placeholder="أدخل بريدك الإلكتروني أو رقم الهاتف" data-en-placeholder="Enter email or phone number" placeholder="أدخل بريدك الإلكتروني أو رقم الهاتف">
+            </div>
+
+            <div class="input-box">
+                <label data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+                <input type="password" id="userPassword" data-ar-placeholder="أدخل كلمة المرور" data-en-placeholder="Enter password" placeholder="أدخل كلمة المرور">
+                <i class="fa-solid fa-eye-slash password-toggle" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+            </div>
+
+            <div class="forgot-pass" id="forgotPassBox">
+                <a href="javascript:void(0)" onclick="alert('Password reset instructions sent.')" data-ar="هل نسيت كلمة المرور؟" data-en="Forgot password?">هل نسيت كلمة المرور؟</a>
+            </div>
+
+            <button class="btn-submit-main" id="mainSubmitBtn" onclick="submitAuthForm()" data-ar="تسجيل الدخول" data-en="Sign In">تسجيل الدخول</button>
+
+            <div class="divider"><span data-ar="أو" data-en="Or">أو</span></div>
+
+            <button class="btn-google-auth" onclick="triggerGoogleRealAuth()">
+                <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" width="18" alt="Google">
+                <span data-ar="متابعة باستخدام Google" data-en="Continue with Google">متابعة باستخدام Google</span>
+            </button>
+
+            <div class="modal-footer-switch">
+                <span id="switchText" data-ar="ليس لديك حساب؟" data-en="Don't have an account?">ليس لديك حساب؟</span>
+                <span id="switchActionText" onclick="toggleAuthMode()" data-ar="سجّل الآن" data-en="Sign up">سجّل الآن</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="badge" data-ar="🚀 أسرع منصة متاجر في الوطن العربي" data-en="🚀 The Fastest Store Platform in the Arab World">🚀 أسرع منصة متاجر في الوطن العربي</div>
+        <h1 data-ar="نظّم شغلك، سيطر على حساباتك، وكل ده مجانًا! &lt;span&gt;في أقل من دقيقة!&lt;/span&gt;" data-en="Organize your work, control your accounts, and everything for free! &lt;span&gt;In less than a minute!&lt;/span&gt;">نظّم شغلك، سيطر على حساباتك، وكل ده مجانًا! <span>في أقل من دقيقة!</span></h1>
+        <p data-ar="كل شغلك في مكان واحد! نظّم أوردراتك، احسب أرباحك وخسائرك، وتابع مصاريفك ومبيعاتك من غير شيتات ولا حسابات معقدة." data-en="All your work in one place! Organize your orders, calculate your profits and losses, and track your expenses and sales.">كل شغلك في مكان واحد! نظّم أوردراتك، احسب أرباحك وخسائرك، وتابع مصاريفك ومبيعاتك من غير شيتات ولا حسابات معقدة.</p>
+        <a href="create_ar.html" id="createStoreBtn" class="btn-cta" style="padding: 16px 36px; font-size: 17px; display: inline-block;" data-ar="ابدأ إنشاء متجرك الآن 👈" data-en="Start Your Store Now 👈">ابدأ إنشاء متجرك الآن 👈</a>
+    </div>
+
+    <!-- Ticker -->
+    <div class="stores-ticker-section" id="stores">
+        <div class="ticker-title" data-ar="انضم لأكثر من 500+ تجار ومحلات يثقون بمنصتنا" data-en="Joined by over 500+ merchants and shops trusting our platform">انضم لأكثر من 500+ تجار ومحلات يثقون بمنصتنا</div>
+        <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+
+    <!-- قسم كيف نعمل؟ -->
+    <div class="features-section" id="how">
+        <h2 class="sec-title" data-ar="كيف تعمل منصة Daghta؟" data-en="How does Daghta platform work?">كيف تعمل منصة Daghta؟</h2>
+        <p class="sec-subtitle" data-ar="3 خطوات بسيطة تبدأ بعدها باستقبال أوردراتك فوراً" data-en="3 simple steps to start receiving your orders immediately">3 خطوات بسيطة تبدأ بعدها باستقبال أوردراتك فوراً</p>
+
+        <div class="grid-3">
+            <div class="feature-card">
+                <span class="feature-num">01</span>
+                <h3 data-ar="أنشئ صفحتك" data-en="Create Your Page">أنشئ صفحتك</h3>
+                <p data-ar="اكتب اسم البراند، اختر عملتك المفضلّة، وارفع اللوجو وصورة الغلاف الخاصة بك من جهازك مباشرة." data-en="Write your brand name, choose your preferred currency, and upload your logo and cover directly.">اكتب اسم البراند، اختر عملتك المفضلّة، وارفع اللوجو وصورة الغلاف الخاصة بك من جهازك مباشرة.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-num">02</span>
+                <h3 data-ar="أضف المنتجات" data-en="Add Products">أضف المنتجات</h3>
+                <p data-ar="من لوحة تحكم التاجر السهلة، أضف صور منتجاتك، أسعارها، وتكلفتها لمتابعة أرباحك الصافية." data-en="From the easy merchant dashboard, add your product images, prices, and costs.">من لوحة تحكم التاجر السهلة، أضف صور منتجاتك، أسعارها، وتكلفتها لمتابعة أرباحك الصافية.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-num">03</span>
+                <h3 data-ar="شارك واستقبل الطلبات" data-en="Share & Receive Orders">شارك واستقبل الطلبات</h3>
+                <p data-ar="انسخ رابط صفحة متجرك المباشر وشيره في السوشيال ميديا، وخلّي كل طلباتك متجمعة ومنظمة في صفحة واحدة!" data-en="Copy your direct store link and share it on social media, keeping all orders organized!">انسخ رابط صفحة متجرك المباشر وشيره في السوشيال ميديا، وخلّي كل طلباتك متجمعة ومنظمة في صفحة واحدة!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم الأسئلة الشائعة -->
+    <div class="faq-section" id="faq">
+        <h2 class="sec-title" style="text-align: center;" data-ar="الأسئلة الشائعة" data-en="Frequently Asked Questions">الأسئلة الشائعة</h2>
+        <p class="sec-subtitle" style="text-align: center;" data-ar="كل ما تحتاج معرفته عن استخدام المنصة" data-en="Everything you need to know about using the platform">كل ما تحتاج معرفته عن استخدام المنصة</p>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-question">
+                <span data-ar="هل نحتاج لخبرة برمجية لإنشاء المتجر؟" data-en="Do we need programming experience to create a store?">هل نحتاج لخبرة برمجية لإنشاء المتجر؟</span>
+                <span>➕</span>
+            </div>
+            <div class="faq-answer" data-ar="لا، مش محتاج أي خبرة برمجية! تقدر تبدأ بسهولة، وتنظّم أوردراتك وحساباتك وتتابع أرباحك من خلال واجهة بسيطة وسهلة الاستخدام." data-en="No, you don't need any programming experience! You can start easily and organize your orders and accounts.">لا، مش محتاج أي خبرة برمجية! تقدر تبدأ بسهولة، وتنظّم أوردراتك وحساباتك وتتابع أرباحك من خلال واجهة بسيطة وسهلة الاستخدام.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-question">
+                <span data-ar="هل تظهر الصفحة للتجار والعملاء في الدول العربية؟" data-en="Does the page appear for merchants and customers in Arab countries?">هل تظهر الصفحة للتجار والعملاء في الدول العربية؟</span>
+                <span>➕</span>
+            </div>
+            <div class="faq-answer" data-ar="نعم، يمكنك اختيار عملتك المناسبة (ج.م، ر.س، د.إ، $... إلخ)، وستظهر صفحة متجرك بسرعة عالية لجميع العملاء في أي دولة عربية." data-en="Yes, you can choose your appropriate currency (EGP, SAR, AED, $... etc), and your store page will appear with high speed.">نعم، يمكنك اختيار عملتك المناسبة (ج.م، ر.س، د.إ، $... إلخ)، وستظهر صفحة متجرك بسرعة عالية لجميع العملاء في أي دولة عربية.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-question">
+                <span data-ar="كيف استقبل أوردرات العملاء؟" data-en="How do I receive customer orders?">كيف استقبل أوردرات العملاء؟</span>
+                <span>➕</span>
+            </div>
+            <div class="faq-answer" data-ar="تتوجه تفاصيل الطلب بالكامل (الاسم، الموبايل، العنوان، والمنتج) تلقائياً إلى لوحة تحكمك وإلى محادثة الواتساب الخاصة بك فور تأكيد العميل." data-en="Full order details (name, mobile, address, and product) go automatically to your dashboard and WhatsApp chat.">تتوجه تفاصيل الطلب بالكامل (الاسم، الموبايل، العنوان، والمنتج) تلقائياً إلى لوحة تحكمك وإلى محادثة الواتساب الخاصة بك فور تأكيد العميل.</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="social-links">
+                <a href="#" class="social-btn facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="social-btn instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social-btn tiktok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="social-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div style="margin: 15px 0; text-align: center;">
+            <a href="contact.html" style="color: #cbd5e1; text-decoration: none; font-size: 14px;" data-ar="اتصل بنا والدعم الفني" data-en="Contact Us & Support">اتصل بنا والدعم الفني</a>
+        </div>
+        <div class="footer-logo-box">
+            <img src="Daghta_ar_white.png" id="footerLogo" class="footer-logo-img" alt="Daghta Logo" data-ar-logo="Daghta_ar_white.png" data-en-logo="Daghta_logo_en.png">
+        </div>
+        <div class="copyright" data-ar="جميع الحقوق محفوظة لمنصة Daghta © 2026" data-en="All rights reserved for Daghta platform © 2026">
+            جميع الحقوق محفوظة لمنصة Daghta © 2026
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

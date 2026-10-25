@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daghta - Create Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { font-family: 'Cairo', sans-serif; box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; }
+        body { background-color: #070a12; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; direction: ltr; text-align: left; }
+        
+        .auth-card { background: #0f172a; color: #f8fafc; padding: 40px 35px; border-radius: 24px; width: 450px; max-width: 90%; box-shadow: 0 25px 50px rgba(0,0,0,0.7); border: 1px solid #1e293b; position: relative; }
+        .auth-logo { width: 140px; height: auto; object-fit: contain; margin: 0 auto 20px; display: block; }
+        .auth-title { font-size: 24px; font-weight: 900; color: #ffffff; margin-bottom: 8px; text-align: center; }
+        .auth-subtitle { font-size: 13px; color: #94a3b8; font-weight: 600; margin-bottom: 30px; text-align: center; }
+
+        .input-box { position: relative; margin-bottom: 20px; }
+        .input-box label { display: block; font-size: 13px; font-weight: 800; color: #cbd5e1; margin-bottom: 6px; }
+        .input-box input { width: 100%; padding: 13px 16px; border: 1.5px solid #334155; border-radius: 12px; font-size: 14px; outline: none; background: #1e293b; color: #fff; }
+        .input-box input:focus { border-color: #38bdf8; background: #0f172a; box-shadow: 0 0 0 3px rgba(56,189,248,0.15); }
+
+        .password-toggle { position: absolute; top: 40px; right: 15px; cursor: pointer; color: #94a3b8; font-size: 15px; }
+
+        .btn-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, #38bdf8, #0284c7); color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(56,189,248,0.3); margin-top: 10px; }
+        .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(56,189,248,0.5); }
+
+        .divider { display: flex; align-items: center; text-align: center; color: #64748b; font-size: 13px; margin: 20px 0; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #334155; }
+        .divider span { padding: 0 15px; font-weight: 600; }
+
+        .btn-google { width: 100%; padding: 12px; background: #1e293b; border: 1.5px solid #334155; border-radius: 12px; font-size: 14px; font-weight: 800; color: #f8fafc; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-google:hover { background: #334155; border-color: #38bdf8; }
+
+        .auth-footer { margin-top: 25px; text-align: center; font-size: 13px; color: #94a3b8; font-weight: 600; }
+        .auth-footer a { color: #38bdf8; font-weight: 800; text-decoration: none; margin-left: 5px; }
+        .auth-footer a:hover { text-decoration: underline; }
+        
+        .back-home { position: absolute; top: 20px; left: 20px; color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .back-home:hover { color: #38bdf8; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Home</a>
+        
+        <img src="Daghta_logo_en.png" class="auth-logo" alt="Daghta">
+        <div class="auth-title">Create an Account</div>
+        <div class="auth-subtitle">Start your business and manage orders instantly.</div>
+
+        <div class="input-box">
+            <label>Full Name</label>
+            <input type="text" id="signupName" placeholder="Enter your full name">
+        </div>
+
+        <div class="input-box">
+            <label>Email or Phone Number</label>
+            <input type="text" id="signupUser" placeholder="Enter email or phone">
+        </div>
+
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" id="signupPassword" placeholder="Create a password">
+            <i class="fa-solid fa-eye-slash password-toggle" id="togglePass" onclick="togglePass()"></i>
+        </div>
+
+        <button class="btn-submit" onclick="handleSignup()">Create Account</button>
+
+        <div class="divider"><span>Or</span></div>
+
+        <button class="btn-google" onclick="window.location.href='dashboard.html'">
+            <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" width="18" alt="Google">
+            Continue with Google
+        </button>
+
+        <div class="auth-footer">
+            Already have an account? <a href="index.html">Sign In</a>
+        </div>
+    </div>
+
+    <script>
+        function togglePass() {
+            const pass = document.getElementById('signupPassword');
+            const icon = document.getElementById('togglePass');
+            if (pass.type === 'password') {
+                pass.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                pass.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        }
+
+        function handleSignup() {
+            const name = document.getElementById('signupName').value.trim();
+            const user = document.getElementById('signupUser').value.trim();
+            const pass = document.getElementById('signupPassword').value.trim();
+
+            if (!name || !user || !pass) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            localStorage.setItem('daghta_logged_in', 'true');
+            localStorage.setItem('daghta_user', user);
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

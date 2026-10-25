@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daghta - اتصل بنا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-header {
+            background-color: #1a365d;
+            color: white;
+            padding: 40px 20px 80px 20px;
+            text-align: right;
+        }
+        .contact-header .breadcrumb {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+        }
+        .contact-header .breadcrumb a {
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+        .contact-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .contact-header p {
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .contact-container {
+            max-width: 1050px;
+            margin: -40px auto 60px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+        }
+        .contact-form-side {
+            flex: 1;
+            padding: 40px;
+        }
+        .contact-form-side h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 24px;
+        }
+        .form-group-c {
+            margin-bottom: 18px;
+        }
+        .form-group-c input, .form-group-c textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #f8fafc;
+        }
+        .form-group-c input:focus, .form-group-c textarea:focus {
+            border-color: #2563eb;
+            background: #fff;
+        }
+        .form-group-c textarea {
+            resize: vertical;
+            height: 120px;
+        }
+        .btn-send-msg {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-send-msg:hover {
+            background-color: #1e40af;
+        }
+        .contact-info-side {
+            flex: 1;
+            background: #f8fafc;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-right: 1px solid #f1f5f9;
+        }
+        .contact-info-side img {
+            max-width: 85%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .contact-info-side h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        .contact-info-side p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        /* تصميم رسالة النجاح */
+        .success-box {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .success-box i {
+            font-size: 60px;
+            color: #16a34a;
+            margin-bottom: 20px;
+        }
+        .success-box h3 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        .success-box p {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+        .btn-home {
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 800;
+            display: inline-block;
+        }
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+                margin: -20px 15px 40px 15px;
+            }
+            .contact-info-side {
+                order: -1;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand-box">
+            <img src="Daghta_ar_white.png" id="headerLogo" class="exact-logo-img" alt="Daghta Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#how">كيف نعمل؟</a></li>
+            <li><a href="index.html#stores">شركاء النجاح</a></li>
+            <li><a href="index.html#faq">الأسئلة الشائعة</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="index.html" class="btn-login">الرئيسية</a>
+        </div>
+    </nav>
+
+    <!-- قسم الهيدر الأزرق للصفحة -->
+    <div class="contact-header">
+        <div style="max-width: 1050px; margin: 0 auto;">
+            <div class="breadcrumb">
+                <a href="index.html">الصفحة الرئيسية</a> \ <span>اتصل بنا</span>
+            </div>
+            <h1>اتصل بنا</h1>
+            <p>هل لديك سؤال أو تحتاج مساعدة؟ فريقنا هنا لخدمتك. أرسل لنا رسالة وسنتواصل معك قريبًا!</p>
+        </div>
+    </div>
+
+    <!-- محتوى النموذج وكارت الدعم -->
+    <div class="contact-container">
+        
+        <!-- نموذج الإرسال -->
+        <div class="contact-form-side">
+            
+            <!-- نموذج الفورم العادي -->
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+                <h3>لا تتردد في التواصل معنا!</h3>
+                <div class="form-group-c">
+                    <input type="text" id="cSubject" placeholder="أدخل موضوع الرسالة" required>
+                </div>
+                <div class="form-group-c">
+                    <input type="text" id="cPhone" placeholder="أدخل رقم هاتفك" required>
+                </div>
+                <div class="form-group-c">
+                    <input type="email" id="cEmail" placeholder="أدخل عنوان بريدك الإلكتروني" required>
+                </div>
+                <div class="form-group-c">
+                    <textarea id="cMessage" placeholder="ماذا تريد منا أن نعرف؟" required></textarea>
+                </div>
+                <button type="submit" class="btn-send-msg">
+                    <i class="fa-solid fa-paper-plane"></i> أرسل رسالة
+                </button>
+            </form>
+
+            <!-- رسالة النجاح التي ستظهر بعد الإرسال -->
+            <div id="successMessage" class="success-box">
+                <i class="fa-solid fa-circle-check"></i>
+                <h3>تم إرسال رسالة للقسم المختص وسيتم التواصل معك قريباً</h3>
+                <p>شكراً لتواصلك معنا، تم تسجيل رسالتك بنجاح وتحويلها لفريق الدعم الفني.</p>
+                <a href="index.html" class="btn-home"><i class="fa-solid fa-house"></i> العودة للصفحة الرئيسية</a>
+            </div>
+
+        </div>
+
+        <!-- الجانب التوضيحي -->
+        <div class="contact-info-side">
+            <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Support">
+            <h4>هل تحتاج مساعدة؟ رسالة واحدة تفصلنا عنك!</h4>
+            <p>أرسل لنا استفسارك، وسوف نقوم بالرد عليك على الفور بالدعم الذي تحتاجه.</p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo-box">
+            <img src="Daghta_ar_white.png" class="footer-logo-img" alt="Daghta Logo">
+        </div>
+        <div class="copyright">
+            جميع الحقوق محفوظة لمنصة Daghta © 2026
+        </div>
+    </footer>
+
+    <script>
+        function submitContactForm(e) {
+            e.preventDefault();
+            
+            const subject = document.getElementById('cSubject').value;
+            const phone = document.getElementById('cPhone').value;
+            const email = document.getElementById('cEmail').value;
+            const message = document.getElementById('cMessage').value;
+            
+            const now = new Date();
+            const dateTime = now.toLocaleDateString('ar-EG') + ' - ' + now.toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'});
+
+            // جلب الرسائل المخزنة محلياً
+            let messages = JSON.parse(localStorage.getItem('daghta_support_messages') || '[]');
+            
+            // إضافة الرسالة الجديدة للـ Array
+            messages.unshift({
+                subject,
+                phone,
+                email,
+                message,
+                dateTime,
+                status: 'جديدة 📩'
+            });
+
+            // حفظ البيانات في localStorage عشان تظهر للآدمن
+            localStorage.setItem('daghta_support_messages', JSON.stringify(messages));
+
+            // اخفاء الفورم وإظهار رسالة النجاح المطلوبة
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
